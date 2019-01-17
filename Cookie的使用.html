@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="cookier.js"></script>
+</head>
+
+<body>
+    <form action="https://www.baidu.com/" onsubmit="cookieCheck();">
+        <input type="text" name="username" placeholder="请输入用户名">
+        <input type="password" password="password" placeholder="请输入密码" /><br /><br />
+        <input type="checkbox" value="7" /> 七天免登录 <input type="submit" />
+    </form>
+    <script>
+        //判断是否在cookie有效期
+        var obj = cookieObj.getALLCookie(); //读取cookie对象集合
+        //判断登陆状态cookie是否存在
+        if (obj.state) {
+            //存在，说明还处于免登录状态
+            setTimeout(() => {
+                document.write("这是登陆成功后的页面");
+            }, 0);
+        }
+
+        function cookieCheck(e) {
+            var e = event || (event = window.event); //获取提交事件对象
+            e.preventDefault(); //阻止默认事件
+            //登陆时查看用户是否勾选了七天免登陆，若勾选了就写入cookie中
+            if (document.querySelectorAll("[type=checkbox]")[0].checked) {
+                cookieObj.setCookie({
+                    state: "yes"
+                }, 7 * 24 * 3600 * 1000); //写入7天免登录cookie
+            }
+            document.write("这是登陆成功后的页面");
+        }
+    </script>
+</body>
+
+</html>

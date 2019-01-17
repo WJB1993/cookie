@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //对象数组，每个对象都为一个cookie信息
+        var myobj = [
+            {
+                cookieName: "test1",
+                cookieValue: "123",
+                time: 3600 * 1000,
+                path: "/"
+            },
+            {
+                cookieName: "test2",
+                cookieValue: "234",
+                time: 3600 * 1000,
+                path: "/"
+            },
+            {
+                cookieName: "test3",
+                cookieValue: "456",
+                time: 3600 * 1000,
+                path: "/"
+            }]
+
+        function setCookies(objArr) {
+            objArr.forEach(function (ele) {
+                var d = new Date();
+                d.setTime(d.getTime() + ele.time);
+                d = d.toUTCString();
+                document.cookie = ele.cookieName + "=" + ele.cookieValue + ";expires=" + d + ";path=" + ele.path;
+            });
+        }
+
+        //获取所有的cookie,以对象的形式返回
+        function getAllcookies() {
+            var obj = {};
+            var arr = document.cookie.split(";");
+            arr.forEach(function (ele) {
+                var arr2 = ele.split("=");
+                obj[arr2[0].trim()] = arr2[1];
+            });
+            return obj;
+        }
+
+        //删除所有cookie
+        function clearAllCookies() {
+            var arr = document.cookie.split(";");
+            arr.forEach(function (ele) {
+                var arr2 = ele.split("=");
+                document.cookie = arr2[0] + "=;expires=" + new Date().toUTCString() + ";path=/";
+                document.cookie = arr2[0] + "=;expires=" + new Date().toUTCString();
+            });
+        }
+
+        var cookieObj = {
+            setCookies: setCookies,
+            getAllcookies: getAllcookies,
+            clearAllCookies: clearAllCookies
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input name="username" /><br /><input type="checkbox"> 七天免登录
+    <button onclick="fn()">登录</button>
+    <script>
+        function setCookies(objArr) {
+            objArr.forEach(function (ele) {
+                var d = new Date();
+                d.setTime(d.getTime() + ele.time);
+                d = d.toUTCString();
+                document.cookie = ele.cookieName + "=" + ele.cookieValue + ";expires=" + d + ";path=" + ele.path;
+            });
+        }
+
+        //获取所有的cookie,以对象的形式返回
+        function getAllcookies() {
+            var obj = {};
+            var arr = document.cookie.split(";");
+            arr.forEach(function (ele) {
+                var arr2 = ele.split("=");
+                obj[arr2[0].trim()] = arr2[1];
+            });
+            return obj;
+        }
+
+        //删除所有cookie
+        function clearAllCookies() {
+            var arr = document.cookie.split(";");
+            arr.forEach(function (ele) {
+                var arr2 = ele.split("=");
+                document.cookie = arr2[0] + "=;expires=" + new Date().toUTCString() + ";path=/";
+                document.cookie = arr2[0] + "=;expires=" + new Date().toUTCString();
+            });
+        }
+
+        var cookieObj = {
+            setCookies: setCookies,
+            getAllcookies: getAllcookies,
+            clearAllCookies: clearAllCookies
+        }
+
+
+        //用户一打开登录页面，就判断cookie里面是否含有此登录状态，有的话就直接登录成功进行跳转
+        var state = cookieObj.getAllcookies().loginState;
+        if (state == "yes") {
+            setTimeout(function () {
+                var usernameV = document.querySelector("input[name=username]").value;
+                location.assign("./home.html?username=" + usernameV);
+            }, 112000)
+        }
+        function fn() {
+            var usernameV = document.querySelector("input[name=username]").value;
+            if (usernameV == "admin") {
+                alert("登录成功");
+                //判断是否勾选了七天免登录
+                if (document.querySelector("[type=checkbox]").checked) {
+                    //将登录成功状态写入cookie,7天有效
+                    document.cookie = "loginState=yes;max-age=" + 7 * 24 * 3600 + ";path=/";
+                }
+                location.assign("./home.html?username=" + usernameV);
+
+            }
+            else alert("用户名错误，登录失败");
+        }
+
+
+    </script>
+</body>
+
+</html>

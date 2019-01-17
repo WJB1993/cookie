@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    welcome
+    <button onclick="fn()">获取longin页面传过来的数据</button>
+    <button onclick="history.back()">back</button>
+    <script>
+        function fn() {
+            var search = location.search
+            var v1 = search.slice(1).split("&")
+            // 把参数组装为对象
+            var obj = {};
+            v1.forEach(function (ele) {
+                var arele = ele.split("=");
+                obj[arele[0]] = arele[1];
+            });
+            alert("登录的用户为：" + decodeURIComponent(obj.username));
+        }
+    </script>
+</body>
+
+</html>

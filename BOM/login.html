@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input name="username" />
+    <button onclick="fn()">登录</button>
+    <script>
+        function fn() {
+            var usernameV = document.querySelector("input[name=username]").value;
+            // location.href = "./home.html?username="+usernameV+"&testp=666";
+            // location.replace("./home.html?username="+usernameV+"&testp=666");
+            location.assign("./home.html?username=" + usernameV + "&testp=666");
+        }
+
+
+
+    </script>
+</body>
+
+</html>
